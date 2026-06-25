@@ -1,0 +1,165 @@
+"""Support for Anthem infrared controlled media players."""
+
+from dataclasses import dataclass
+from typing import Any
+
+from infrared_protocols.codes.anthem.mrx_x20_x40_avm_x import AnthemCode
+
+from homeassistant.components.media_player import (
+    MediaPlayerDeviceClass,
+    MediaPlayerEntity,
+    MediaPlayerEntityFeature,
+    MediaPlayerState,
+)
+from homeassistant.const import CONF_MODEL
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+from homeassistant.helpers.restore_state import ExtraStoredData, RestoreEntity
+
+from . import AnthemIrConfigEntry
+from .const import CONF_INFRARED_EMITTER_ENTITY_ID, MODELS
+from .entity import AnthemIrEntity
+
+PARALLEL_UPDATES = 1
+
+SOURCE_TO_CODE: dict[str, AnthemCode] = {
+    "input1": AnthemCode.INPUT_1,
+    "input2": AnthemCode.INPUT_2,
+    "input3": AnthemCode.INPUT_3,
+    "input4": AnthemCode.INPUT_4,
+    "input5": AnthemCode.INPUT_5,
+    "input6": AnthemCode.INPUT_6,
+    "input7": AnthemCode.INPUT_7,
+    "input8": AnthemCode.INPUT_8,
+    "input9": AnthemCode.INPUT_9,
+    "input10": AnthemCode.INPUT_10,
+    "input11": AnthemCode.INPUT_11,
+    "input12": AnthemCode.INPUT_12,
+    "input13": AnthemCode.INPUT_13,
+    "input14": AnthemCode.INPUT_14,
+    "input15": AnthemCode.INPUT_15,
+    "input16": AnthemCode.INPUT_16,
+    "input17": AnthemCode.INPUT_17,
+    "input18": AnthemCode.INPUT_18,
+    "input19": AnthemCode.INPUT_19,
+    "input20": AnthemCode.INPUT_20,
+    "input21": AnthemCode.INPUT_21,
+    "input22": AnthemCode.INPUT_22,
+    "input23": AnthemCode.INPUT_23,
+    "input24": AnthemCode.INPUT_24,
+    "input25": AnthemCode.INPUT_25,
+    "input26": AnthemCode.INPUT_26,
+    "input27": AnthemCode.INPUT_27,
+    "input28": AnthemCode.INPUT_28,
+    "input29": AnthemCode.INPUT_29,
+}
+
+
+@dataclass
+class _AnthemAmplifierExtraData(ExtraStoredData):
+    """Persisted assumed-state data for an Anthem amplifier.
+
+    Stored separately from the entity state because while the amplifier is
+    OFF, ``MediaPlayerEntity.state_attributes`` strips ``source`` / mute,
+    so a restart in the OFF state would otherwise lose them.
+    """
+
+    source: str | None
+    is_volume_muted: bool | None
+
+    def as_dict(self) -> dict[str, Any]:
+        """Serialize for the restore-state store."""
+        return {"source": self.source, "is_volume_muted": self.is_volume_muted}
+
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: AnthemIrConfigEntry,
+    async_add_entities: AddConfigEntryEntitiesCallback,
+) -> None:
+    """Set up Anthem IR media player from config entry."""
+    infrared_entity_id = entry.data[CONF_INFRARED_EMITTER_ENTITY_ID]
+    async_add_entities([AnthemIrAmplifierMediaPlayer(entry, infrared_entity_id)])
+
+
+class AnthemIrAmplifierMediaPlayer(AnthemIrEntity, MediaPlayerEntity, RestoreEntity):
+    """Anthem IR amplifier media player entity."""
+
+    _attr_name = None
+    _attr_assumed_state = True
+    _attr_device_class = MediaPlayerDeviceClass.RECEIVER
+    _attr_translation_key = "receiver"
+
+    def __init__(self, entry: AnthemIrConfigEntry, infrared_entity_id: str) -> None:
+        """Initialize Anthem IR amplifier media player."""
+        super().__init__(entry, infrared_entity_id, unique_id_suffix="media_player")
+        codes = MODELS[entry.data[CONF_MODEL]].codes
+        self._source_to_code = {
+            source: code for source, code in SOURCE_TO_CODE.items() if code in codes
+        }
+        self._attr_source_list = list(self._source_to_code)
+        features = (
+            MediaPlayerEntityFeature.TURN_ON
+            | MediaPlayerEntityFeature.TURN_OFF
+            | MediaPlayerEntityFeature.VOLUME_STEP
+            | MediaPlayerEntityFeature.VOLUME_MUTE
+        )
+        if self._source_to_code:
+            features |= MediaPlayerEntityFeature.SELECT_SOURCE
+        self._attr_supported_features = features
+
+    @property
+    def extra_restore_state_data(self) -> ExtraStoredData:
+        """Persist source and mute regardless of ON/OFF state."""
+        return _AnthemAmplifierExtraData(
+            source=self._attr_source,
+            is_volume_muted=self.is_volume_muted,
+        )
+
+    async def async_added_to_hass(self) -> None:
+        """Restore state on startup."""
+        await super().async_added_to_hass()
+
+        if (last_state := await self.async_get_last_state()) is not None and (
+            last_state.state in (MediaPlayerState.ON, MediaPlayerState.OFF)
+        ):
+            self._attr_state = MediaPlayerState(last_state.state)
+
+        if (extra := await self.async_get_last_extra_data()) is not None:
+            data = extra.as_dict()
+            if (source := data.get("source")) in self._source_to_code:
+                self._attr_source = source
+            if (muted := data.get("is_volume_muted")) is not None:
+                self._attr_is_volume_muted = bool(muted)
+
+    async def async_turn_on(self) -> None:
+        """Turn on the amplifier."""
+        await self._send_command(AnthemCode.POWER, repeat_count=5)
+        self._attr_state = MediaPlayerState.ON
+        self.async_write_ha_state()
+
+    async def async_turn_off(self) -> None:
+        """Turn off the amplifier."""
+        await self._send_command(AnthemCode.STANDBY)
+        self._attr_state = MediaPlayerState.OFF
+        self.async_write_ha_state()
+
+    async def async_volume_up(self) -> None:
+        """Send volume up command."""
+        await self._send_command(AnthemCode.VOLUME_UP)
+
+    async def async_volume_down(self) -> None:
+        """Send volume down command."""
+        await self._send_command(AnthemCode.VOLUME_DOWN)
+
+    async def async_mute_volume(self, mute: bool) -> None:
+        """Send mute/unmute command."""
+        await self._send_command(AnthemCode.MUTE)
+        self._attr_is_volume_muted = mute
+        self.async_write_ha_state()
+
+    async def async_select_source(self, source: str) -> None:
+        """Select an input source."""
+        await self._send_command(self._source_to_code[source])
+        self._attr_source = source
+        self.async_write_ha_state()

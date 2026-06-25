@@ -1,0 +1,405 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This Anthem device has already been configured with this transmitter.",
+      "no_emitters": "No infrared transmitter entities found. Please set up an infrared device first."
+    },
+    "step": {
+      "user": {
+        "data": {
+          "infrared_emitter_entity_id": "Infrared transmitter",
+          "model": "Model"
+        },
+        "data_description": {
+          "infrared_emitter_entity_id": "The infrared transmitter entity to use for sending commands.",
+          "model": "The Anthem model to control."
+        },
+        "description": "Select the Anthem model and the infrared transmitter entity to use for controlling your Anthem device.",
+        "title": "Set up Anthem IR Remote"
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "power": {
+        "name": "Power On"
+      },
+      "volume_up": {
+        "name": "Volume +"
+      },
+      "volume_down": {
+        "name": "Volume -"
+      },
+      "mute": {
+        "name": "Mute"
+      },
+      "standby": {
+        "name": "Power Off"
+      },
+      "bass": {
+        "name": "Bass"
+      },
+      "treble": {
+        "name": "Treble"
+      },
+      "dim": {
+        "name": "Display Dim"
+      },
+      "balance": {
+        "name": "Balance"
+      },
+      "level": {
+        "name": "Level"
+      },
+      "num_1": {
+        "name": "1"
+      },
+      "num_2": {
+        "name": "2"
+      },
+      "num_3": {
+        "name": "3"
+      },
+      "num_4": {
+        "name": "4"
+      },
+      "num_5": {
+        "name": "5"
+      },
+      "num_6": {
+        "name": "6"
+      },
+      "num_7": {
+        "name": "7"
+      },
+      "num_8": {
+        "name": "8"
+      },
+      "num_9": {
+        "name": "9"
+      },
+      "num_0": {
+        "name": "0"
+      },
+      "input_cycle": {
+        "name": "Input Cycle"
+      },
+      "setup_menu": {
+        "name": "Setup Menu"
+      },
+      "info": {
+        "name": "Info"
+      },
+      "cursor_left": {
+        "name": "Left"
+      },
+      "cursor_right": {
+        "name": "Right"
+      },
+      "cursor_up": {
+        "name": "Up"
+      },
+      "cursor_down": {
+        "name": "Down"
+      },
+      "select": {
+        "name": "Select"
+      },
+      "clear": {
+        "name": "Clear"
+      },
+      "dynamics": {
+        "name": "Dynamics"
+      },
+      "mode": {
+        "name": "Mode"
+      },
+      "last": {
+        "name": "Last"
+      },
+      "lip_sync": {
+        "name": "Lip Sync"
+      },
+      "page_preset_up": {
+        "name": "Page/Preset Up"
+      },
+      "page_preset_down": {
+        "name": "Page/Preset Down"
+      },
+      "input_1": {
+        "name": "Input 1"
+      },
+      "input_2": {
+        "name": "Input 2"
+      },
+      "input_3": {
+        "name": "Input 3"
+      },
+      "input_4": {
+        "name": "Input 4"
+      },
+      "input_5": {
+        "name": "Input 5"
+      },
+      "input_6": {
+        "name": "Input 6"
+      },
+      "input_7": {
+        "name": "Input 7"
+      },
+      "input_8": {
+        "name": "Input 8"
+      },
+      "input_9": {
+        "name": "Input 9"
+      },
+      "input_10": {
+        "name": "Input 10"
+      },
+      "input_11": {
+        "name": "Input 11"
+      },
+      "input_12": {
+        "name": "Input 12"
+      },
+      "input_13": {
+        "name": "Input 13"
+      },
+      "input_14": {
+        "name": "Input 14"
+      },
+      "input_15": {
+        "name": "Input 15"
+      },
+      "input_16": {
+        "name": "Input 16"
+      },
+      "input_17": {
+        "name": "Input 17"
+      },
+      "input_18": {
+        "name": "Input 18"
+      },
+      "input_19": {
+        "name": "Input 19"
+      },
+      "input_20": {
+        "name": "Input 20"
+      },
+      "input_21": {
+        "name": "Input 21"
+      },
+      "input_22": {
+        "name": "Input 22"
+      },
+      "input_23": {
+        "name": "Input 23"
+      },
+      "input_24": {
+        "name": "Input 24"
+      },
+      "input_25": {
+        "name": "Input 25"
+      },
+      "input_26": {
+        "name": "Input 26"
+      },
+      "input_27": {
+        "name": "Input 27"
+      },
+      "input_28": {
+        "name": "Input 28"
+      },
+      "input_29": {
+        "name": "Input 29"
+      },
+      "input_30": {
+        "name": "Input 30"
+      },
+      "zone2_power": {
+        "name": "Zone 2 - Power On"
+      },
+      "zone2_volume_up": {
+        "name": "Zone 2 - Volume +"
+      },
+      "zone2_down": {
+        "name": "Zone 2 - Down"
+      },
+      "zone2_mute": {
+        "name": "Zone 2 - Mute"
+      },
+      "zone2_standby": {
+        "name": "Zone 2 - Power Off"
+      },
+      "zone2_input_cycle": {
+        "name": "Zone 2 - Input Cycle"
+      },
+      "zone2_input_1": {
+        "name": "Zone 2 - Input 1"
+      },
+      "zone2_input_2": {
+        "name": "Zone 2 - Input 2"
+      },
+      "zone2_input_3": {
+        "name": "Zone 2 - Input 3"
+      },
+      "zone2_input_4": {
+        "name": "Zone 2 - Input 4"
+      },
+      "zone2_input_5": {
+        "name": "Zone 2 - Input 5"
+      },
+      "zone2_input_6": {
+        "name": "Zone 2 - Input 6"
+      },
+      "zone2_input_7": {
+        "name": "Zone 2 - Input 7"
+      },
+      "zone2_input_8": {
+        "name": "Zone 2 - Input 8"
+      },
+      "zone2_input_9": {
+        "name": "Zone 2 - Input 9"
+      },
+      "zone2_input_10": {
+        "name": "Zone 2 - Input 10"
+      },
+      "zone2_input_11": {
+        "name": "Zone 2 - Input 11"
+      },
+      "zone2_input_12": {
+        "name": "Zone 2 - Input 12"
+      },
+      "zone2_input_13": {
+        "name": "Zone 2 - Input 13"
+      },
+      "zone2_input_14": {
+        "name": "Zone 2 - Input 14"
+      },
+      "zone2_input_15": {
+        "name": "Zone 2 - Input 15"
+      },
+      "zone2_input_16": {
+        "name": "Zone 2 - Input 16"
+      },
+      "zone2_input_17": {
+        "name": "Zone 2 - Input 17"
+      },
+      "zone2_input_18": {
+        "name": "Zone 2 - Input 18"
+      },
+      "zone2_input_19": {
+        "name": "Zone 2 - Input 19"
+      },
+      "zone2_input_20": {
+        "name": "Zone 2 - Input 20"
+      },
+      "zone2_input_21": {
+        "name": "Zone 2 - Input 21"
+      },
+      "zone2_input_22": {
+        "name": "Zone 2 - Input 22"
+      },
+      "zone2_input_23": {
+        "name": "Zone 2 - Input 23"
+      },
+      "zone2_input_24": {
+        "name": "Zone 2 - Input 24"
+      },
+      "zone2_input_25": {
+        "name": "Zone 2 - Input 25"
+      },
+      "zone2_input_26": {
+        "name": "Zone 2 - Input 26"
+      },
+      "zone2_input_27": {
+        "name": "Zone 2 - Input 27"
+      },
+      "zone2_input_28": {
+        "name": "Zone 2 - Input 28"
+      },
+      "zone2_input_29": {
+        "name": "Zone 2 - Input 29"
+      },
+      "zone2_input_30": {
+        "name": "Zone 2 - Input 30"
+      },
+            "zone2_preset_up": {
+        "name": "Zone 2 - Page/Preset Up"
+      },
+        "zone2_preset_down": {
+        "name": "Zone 2 - Page/Preset Down"
+      }
+    },
+    "media_player": {
+      "receiver": {
+        "state_attributes": {
+          "source": {
+            "state": {
+              "input_1": "Input 1",
+              "input_2": "Input 2",
+              "input_3": "Input 3",
+              "input_4": "Input 4",
+              "input_5": "Input 5",
+              "input_6": "Input 6",
+              "input_7": "Input 7",
+              "input_8": "Input 8",
+              "input_9": "Input 9",
+              "input_10": "Input 10",
+              "input_11": "Input 11",
+              "input_12": "Input 12",
+              "input_13": "Input 13",
+              "input_14": "Input 14",
+              "input_15": "Input 15",
+              "input_16": "Input 16",
+              "input_17": "Input 17",
+              "input_18": "Input 18",
+              "input_19": "Input 19",
+              "input_20": "Input 20",
+              "input_21": "Input 21",
+              "input_22": "Input 22",
+              "input_23": "Input 23",
+              "input_24": "Input 24",
+              "input_25": "Input 25",
+              "input_26": "Input 26",
+              "input_27": "Input 27",
+              "input_28": "Input 28",
+              "input_29": "Input 29",
+              "input_30": "Input 30",
+              "zone2_input_1": "Zone 2 - Input 1",
+              "zone2_input_2": "Zone 2 - Input 2",
+              "zone2_input_3": "Zone 2 - Input 3",
+              "zone2_input_4": "Zone 2 - Input 4",
+              "zone2_input_5": "Zone 2 - Input 5",
+              "zone2_input_6": "Zone 2 - Input 6",
+              "zone2_input_7": "Zone 2 - Input 7",
+              "zone2_input_8": "Zone 2 - Input 8",
+              "zone2_input_9": "Zone 2 - Input 9",
+              "zone2_input_10": "Zone 2 - Input 10",
+              "zone2_input_11": "Zone 2 - Input 11",
+              "zone2_input_12": "Zone 2 - Input 12",
+              "zone2_input_13": "Zone 2 - Input 13",
+              "zone2_input_14": "Zone 2 - Input 14",
+              "zone2_input_15": "Zone 2 - Input 15",
+              "zone2_input_16": "Zone 2 - Input 16",
+              "zone2_input_17": "Zone 2 - Input 17",
+              "zone2_input_18": "Zone 2 - Input 18",
+              "zone2_input_19": "Zone 2 - Input 19",
+              "zone2_input_20": "Zone 2 - Input 20",
+              "zone2_input_21": "Zone 2 - Input 21",
+              "zone2_input_22": "Zone 2 - Input 22",
+              "zone2_input_23": "Zone 2 - Input 23",
+              "zone2_input_24": "Zone 2 - Input 24",
+              "zone2_input_25": "Zone 2 - Input 25",
+              "zone2_input_26": "Zone 2 - Input 26",
+              "zone2_input_27": "Zone 2 - Input 27",
+              "zone2_input_28": "Zone 2 - Input 28",
+              "zone2_input_29": "Zone 2 - Input 29",
+              "zone2_input_30": "Zone 2 - Input 30"
+            }
+          }
+        }
+      }
+    }
+  }
+}

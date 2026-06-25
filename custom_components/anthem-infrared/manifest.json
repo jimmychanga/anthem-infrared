@@ -1,0 +1,14 @@
+{
+  "domain": "anthem_infrared",
+  "name": "Anthem Infrared",
+  "codeowners": ["@jimmychanga"],
+  "config_flow": true,
+  "dependencies": ["infrared"],
+  "documentation": "https://www.home-assistant.io/integrations/anthem_infrared",
+  "integration_type": "device",
+  "iot_class": "assumed_state",
+  "quality_scale": "bronze",
+  "requirements": [
+    "infrared-protocols@git+https://github.com/jimmychanga/infrared-protocols.git@Anthem-Codes"
+  ]
+}
